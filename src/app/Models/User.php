@@ -52,14 +52,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isVerified(): bool
+    public function isVerified():string
     {
-        return $this->verified == User::VERIFIED_USER;
+        return $this->verified = User::VERIFIED_USER;
     }
 
     public function isAdmin():string
     {
-        return $this->admin == User::ADMIN_USER;
+        return $this->admin = User::ADMIN_USER;
     }
 
     public  function generateVerificationCode(): string
