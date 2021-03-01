@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,12 +25,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateUserRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['password'] = Hash::make($request->password);
+        $validated['verified'] = User::UNVERIFIED_USER;
+        $validated['verification_token'] = User::generateVerificationCode();
+        $validated['admin'] = User::REGULAR_USER;
+
+        $user = User::create($validated);
+
+        return response()->json(['data' => $user], 201);
     }
 
     /**
