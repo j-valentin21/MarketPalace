@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     private UserService $userService;
 
@@ -17,6 +17,7 @@ class UserController extends Controller
     {
         $this->userService = $service;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +27,7 @@ class UserController extends Controller
     {
         $user = User::all();
 
-        return response()->json(['data' => $user], 200);
+        return $this->showAll($user);
     }
 
     /**
@@ -39,18 +40,18 @@ class UserController extends Controller
     {
         $user = $this->userService->createUser($request);
 
-        return response()->json(['data' => $user], 201);
+        return $this->showOne($user, 201);
     }
 
     /**
      * Display the specified resource.
      *
      * @param User $user
-     * @return User
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(User $user): User
+    public function show(User $user): \Illuminate\Http\JsonResponse
     {
-        return $user;
+        return $this->showOne($user);
     }
 
     /**
@@ -67,7 +68,7 @@ class UserController extends Controller
         }
         $this->userService->updateUser($request,$user);
 
-        return response()->json(['data' => $user], 200);
+        return $this->showOne($user);
     }
 
     /**
@@ -75,12 +76,11 @@ class UserController extends Controller
      *
      * @param User $user
      * @return \Illuminate\Http\JsonResponse
-     *
      */
     public function destroy(User $user)
     {
         $user->delete();
 
-        return response()->json(['data' => $user], 200);
+        return $this->showOne($user);
     }
 }
