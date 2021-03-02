@@ -45,6 +45,15 @@ class UserService
             $user->password = Hash::make($request->password);
         }
 
+        if ($request->has('admin')) {
+
+            if (!$user->isVerified()) {
+                return $this->errorResponse('Only verified users can modify the admin field', 409);
+            }
+
+            $user->admin = $request->admin;
+        }
+
         $user->save();
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateUserRequest extends FormRequest
 {
+    public $validator = null;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,5 +30,10 @@ class CreateUserRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ];
+    }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $this->validator = $validator;
     }
 }

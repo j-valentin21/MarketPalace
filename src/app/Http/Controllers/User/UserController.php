@@ -38,6 +38,9 @@ class UserController extends ApiController
      */
     public function store(CreateUserRequest $request)
     {
+        if (isset($request->validator) && $request->validator->fails()) {
+            return response()->json($request->validator->messages(), 422);
+        }
         $user = $this->userService->createUser($request);
 
         return $this->showOne($user, 201);
