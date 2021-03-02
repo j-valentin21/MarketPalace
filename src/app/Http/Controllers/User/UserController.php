@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -38,13 +37,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $validated = $request->validated();
-        $validated['password'] = Hash::make($request->password);
-        $validated['verified'] = User::UNVERIFIED_USER;
-        $validated['verification_token'] = User::generateVerificationCode();
-        $validated['admin'] = User::REGULAR_USER;
-
-        $user = User::create($validated);
+        $user = $this->userService->createUser($request);
 
         return response()->json(['data' => $user], 201);
     }

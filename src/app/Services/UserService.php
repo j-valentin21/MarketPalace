@@ -11,6 +11,22 @@ class UserService
     /**
      * Update user data from request
      *
+     * @param $request
+     */
+    public function createUser ($request)
+    {
+        $validated = $request->validated();
+        $validated['password'] = Hash::make($request->password);
+        $validated['verified'] = User::UNVERIFIED_USER;
+        $validated['verification_token'] = User::generateVerificationCode();
+        $validated['admin'] = User::REGULAR_USER;
+
+       return User::create($validated);
+
+    }
+
+    /**
+     * Update user data from request
      *
      * @param $request
      * @param User $user
