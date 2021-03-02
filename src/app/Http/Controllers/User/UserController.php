@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -62,34 +63,16 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateUserRequest $request
      * @param User $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $validation = $this->userService->validationRulesUpdate($user);
-        $this->validate($request, $validation);
-
-        if ($request->has('name')) {
-            $user->name = $request->name;
+        if (isset($request->validator) && $request->validator->fails()) {
+            return response()->json($request->validator->messages(), 422);
         }
-
-        if ($request->has('email') && $user->email != $request->email) {
-            $user->verified = User::UNVERIFIED_USER;
-            $user->verification_token = User::generateVerificationCode();
-            $user->email = $request->email;
-        }
-
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
-        if (!$user->isDirty()) {
-            return response()->json(['error' => 'You need to specify a different value to update', 'code'=> 422],422);
-        }
-
-        $user->save();
+        $this->userService->updateUser($request,$user);
 
         return response()->json(['data' => $user], 200);
     }
