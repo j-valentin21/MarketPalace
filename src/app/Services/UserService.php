@@ -2,18 +2,17 @@
 
 namespace App\Services;
 
-
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
     /**
-     * Update user data from request
+     * Create new user from request data
      *
      * @param $request
      */
-    public function createUser ($request)
+    public function createUser($request)
     {
         $validated = $request->validated();
         $validated['password'] = Hash::make($request->password);
@@ -22,7 +21,6 @@ class UserService
         $validated['admin'] = User::REGULAR_USER;
 
        return User::create($validated);
-
     }
 
     /**
