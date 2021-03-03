@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
@@ -10,76 +12,70 @@ class CategoryController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        //
-    }
+        $categories = Category::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->showAll($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCategoryRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
+        if (isset($request->validator) && $request->validator->fails()) {
+            return response()->json($request->validator->messages(), 422);
+        }
+
+        $newCategory = Category::create($request->all());
+        return $this->showOne($newCategory, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Category $category): \Illuminate\Http\JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->showOne($category);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category): \Illuminate\Http\JsonResponse
     {
-        //
+        $category->fill($request->all());
+        if ($category->isClean()) {
+            return $this->errorResponse('You need to specify any different value to update', 422);
+        }
+
+        $category->save();
+        return $this->showOne($category);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Category $category): \Illuminate\Http\JsonResponse
     {
-        //
+        $category->delete();
+
+        return $this->showOne($category);
     }
 }
