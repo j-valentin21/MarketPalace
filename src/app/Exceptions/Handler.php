@@ -71,13 +71,5 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => 'Cannot remove this resource permanently. It is related to other resources', 'code' => 409], 409);
             }
         });
-
-        if (config('app.debug') ) {
-            $this->renderable(function ($e) {
-                return response()->json($e->getMessage(), $e->getCode());
-            });
-        }
-
-        return response()->json(['error' => 'Unexpected Exception. Please try again at a later time', 'code' => 500],500);
     }
 }
