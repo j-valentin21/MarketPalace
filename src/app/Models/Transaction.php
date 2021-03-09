@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected array $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'quantity',

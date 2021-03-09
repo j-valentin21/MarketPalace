@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected array $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';
@@ -21,14 +21,14 @@ class User extends Authenticatable
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
 
-    protected string $table = 'users';
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected array $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -42,7 +42,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected array $hidden = [
+    protected $hidden = [
         'password',
         'remember_token',
         'verification_token',
@@ -53,7 +53,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected array $casts = [
+    protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
