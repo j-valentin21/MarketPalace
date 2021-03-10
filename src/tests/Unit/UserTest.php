@@ -42,4 +42,13 @@ class UserTest extends TestCase
         $this->assertEquals($count, '40');
         $this->assertIsString($result);
     }
+
+    public function test_If_First_Letter_Of_Each_Word_Is_Capitalized()
+    {
+        $result = $this->user->getNameAttribute('jerry jackson');
+
+        $this->assertEquals($result, 'Jerry Jackson');
+        $this->assertIsString($result);
+    }
+
 }
