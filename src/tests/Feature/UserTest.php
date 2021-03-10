@@ -87,4 +87,29 @@ class UserTest extends TestCase
                 "deleted_at",
             ]);
     }
+
+    public function test_User_Can_Update_Name_And_Email()
+    {
+        $id = User::all()->random()->id;
+        $userData = [
+            "name" => "Johnny Knows",
+            "email" => "test@example.com",
+        ];
+
+       $response = $this->json('PUT', '/users/' . $id, $userData,  ['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "id",
+                "name",
+                "email",
+                "email_verified_at",
+                "verified",
+                "admin",
+                "created_at",
+                "updated_at",
+                "deleted_at",
+            ]);
+        $this->assertEquals($response['name'], $userData['name']);
+        $this->assertEquals($response['email'], $userData['email']);
+    }
 }

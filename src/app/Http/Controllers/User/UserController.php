@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
@@ -21,9 +22,9 @@ class UserController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $user = User::all();
 
@@ -34,9 +35,9 @@ class UserController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param CreateUserRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function store(CreateUserRequest $request)
+    public function store(CreateUserRequest $request): JsonResponse
     {
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->json($request->validator->messages(), 422);
@@ -50,9 +51,9 @@ class UserController extends ApiController
      * Display the specified resource.
      *
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show(User $user): \Illuminate\Http\JsonResponse
+    public function show(User $user): JsonResponse
     {
         return $this->showOne($user);
     }
@@ -62,9 +63,9 @@ class UserController extends ApiController
      *
      * @param UpdateUserRequest $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->json($request->validator->messages(), 422);
@@ -78,9 +79,9 @@ class UserController extends ApiController
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->delete();
 
