@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -111,5 +109,25 @@ class UserTest extends TestCase
             ]);
         $this->assertEquals($response['name'], $userData['name']);
         $this->assertEquals($response['email'], $userData['email']);
+    }
+
+    public function test_User_Can_Deleted()
+    {
+        $id = User::all()->random()->id;
+
+        $response = $this->json('DELETE', '/users/' . $id,   ['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "id",
+                "name",
+                "email",
+                "email_verified_at",
+                "verified",
+                "admin",
+                "created_at",
+                "updated_at",
+                "deleted_at",
+            ]);
+        $this->assertNotEmpty($response['deleted_at']);
     }
 }
