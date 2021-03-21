@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (QueryException $e) {
-            $errorCode = $e->errorInfo[1];
+            $errorCode = $e->errorInfo;
 
             if ($errorCode == 1451) {
                 return response()->json(['error' => 'Cannot remove this resource permanently. It is related to other resources', 'code' => 409], 409);
