@@ -3,15 +3,16 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     public function test_If_Users_Index_Is_Working_Properly()
     {
+       $user = User::factory()->create();
         $this->json('GET', '/users', ['Accept' => 'application/json'])
             ->assertStatus(200);
     }
@@ -54,7 +55,7 @@ class UserTest extends TestCase
             "password_confirmation" => "knows12345"
         ];
 
-        $this->json('POST', '/users', $userData, ['Accept' => 'application/json'])
+       $response = $this->json('POST', '/users', $userData, ['Accept' => 'application/json'])
             ->assertStatus(201)
             ->assertJsonStructure([
                 "name",
@@ -69,9 +70,9 @@ class UserTest extends TestCase
 
     public function test_One_User_Is_Displayed_Based_On_Id()
     {
-        $id = User::all()->random()->id;
+        $user = User::factory()->create();
 
-        $this->json('GET', '/users/' . $id,  ['Accept' => 'application/json'])
+        $this->json('GET', '/users/' . $user->id,  ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 "id",
@@ -88,13 +89,13 @@ class UserTest extends TestCase
 
     public function test_User_Can_Update_Name_And_Email()
     {
-        $id = User::all()->random()->id;
+        $user = User::factory()->create();
         $userData = [
             "name" => "Johnny Knows",
             "email" => "test@example.com",
         ];
 
-       $response = $this->json('PUT', '/users/' . $id, $userData,  ['Accept' => 'application/json'])
+       $response = $this->json('PUT', '/users/' . $user->id, $userData,  ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 "id",
@@ -113,9 +114,9 @@ class UserTest extends TestCase
 
     public function test_User_Can_Deleted()
     {
-        $id = User::all()->random()->id;
+        $user = User::factory()->create();
 
-        $response = $this->json('DELETE', '/users/' . $id,   ['Accept' => 'application/json'])
+        $response = $this->json('DELETE', '/users/' . $user->id,   ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 "id",
