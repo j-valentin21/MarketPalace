@@ -4,11 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Buyer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class BuyerTransactionTest extends TestCase
+class BuyerProductTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,7 +23,7 @@ class BuyerTransactionTest extends TestCase
     {
         $buyer = Buyer::all()->random()->id;
 
-        $this->json('GET', '/buyers/' . $buyer . '/transactions', ['Accept' => 'application/json'])
+        $this->json('GET', '/buyers/' . $buyer . '/products', ['Accept' => 'application/json'])
             ->assertStatus(200);
     }
 }
