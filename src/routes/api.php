@@ -5,6 +5,7 @@ use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerSellerController;
 use App\Http\Controllers\Buyer\BuyerTransactionController;
+use App\Http\Controllers\Category\CategoryBuyerController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Category\CategoryProductController;
 use App\Http\Controllers\Category\CategorySellerController;
@@ -44,6 +45,7 @@ Route::resource('categories',CategoryController::class,['except' => ['create', '
 Route::resource('categories.products',CategoryProductController::class,['only' => 'index']);
 Route::resource('categories.sellers',CategorySellerController::class,['only' => 'index']);
 Route::resource('categories.transactions',CategoryTransactionController::class,['only' => 'index']);
+Route::resource('categories.buyers',CategoryBuyerController::class,['only' => 'index']);
 
 /**
  * Products
@@ -61,7 +63,6 @@ Route::resource('sellers',SellerController::class,['only' => ['index', 'show']])
 Route::resource('transactions',TransactionController::class,['only' => ['index', 'show']]);
 Route::resource('transactions.categories',TransactionCategoryController::class,['only' => 'index']);
 Route::resource('transactions.sellers',TransactionSellerController::class,['only' => 'index']);
-
 
 /**
  * Users
