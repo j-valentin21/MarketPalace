@@ -17,6 +17,10 @@ class Category extends Model
         'description',
     ];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class);
