@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Models\Buyer;
+use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class BuyerSellerTest extends TestCase
+class CategoryProductTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,11 +19,11 @@ class BuyerSellerTest extends TestCase
         Artisan::call('db:seed');
     }
 
-    public function test_If_Buyer_Seller_Index_Is_Working_Properly()
+    public function test_If_Category_Product_Index_Is_Working_Properly()
     {
-        $buyer = Buyer::all()->random()->id;
+        $categories = Category::all()->random()->id;
 
-        $this->json('GET', '/buyers/' . $buyer . '/sellers', ['Accept' => 'application/json'])
+        $this->json('GET', '/categories/' . $categories . '/products', ['Accept' => 'application/json'])
             ->assertStatus(200);
     }
 }
