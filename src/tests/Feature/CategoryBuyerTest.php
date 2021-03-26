@@ -24,19 +24,6 @@ class CategoryBuyerTest extends TestCase
         $categories = Category::all()->random()->id;
 
         $this->json('GET', '/categories/' . $categories . '/buyers', ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                [
-                    "id",
-                    "name",
-                    "email",
-                    "email_verified_at",
-                    "verified",
-                    "admin",
-                    "created_at",
-                    "updated_at",
-                    "deleted_at"
-                ]
-            ]);
+            ->assertStatus(200);
     }
 }

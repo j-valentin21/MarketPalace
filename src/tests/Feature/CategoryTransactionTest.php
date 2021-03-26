@@ -24,17 +24,6 @@ class CategoryTransactionTest extends TestCase
         $categories = Category::all()->random()->id;
 
         $this->json('GET', '/categories/' . $categories . '/transactions', ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                [
-                    "id",
-                    "quantity",
-                    "buyer_id",
-                    "product_id",
-                    "created_at",
-                    "updated_at",
-                    "deleted_at"
-                ]
-            ]);
+            ->assertStatus(200);
     }
 }

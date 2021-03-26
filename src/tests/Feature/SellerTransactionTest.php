@@ -24,17 +24,6 @@ class SellerTransactionTest extends TestCase
         $seller = Seller::all()->random()->id;
 
         $this->json('GET', '/sellers/' . $seller . '/transactions', ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                [
-                    "id",
-                    "quantity",
-                    "buyer_id",
-                    "product_id",
-                    "created_at",
-                    "updated_at",
-                    "deleted_at",
-                ]
-            ]);
+            ->assertStatus(200);
     }
 }
