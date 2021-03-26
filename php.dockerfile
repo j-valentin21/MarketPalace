@@ -13,4 +13,13 @@ RUN set -xe \
     && rm -rf /usr/share/php \
     && rm -rf /tmp/*
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apk add --no-cache bash curl vim zip \
+    zlib-dev \
+    php7-zlib \
+    libpng-dev \
+    libjpeg-turbo \
+    libjpeg-turbo-dev
+
+RUN docker-php-ext-configure gd --enable-gd --with-jpeg
+
+RUN docker-php-ext-install pdo pdo_mysql gd
