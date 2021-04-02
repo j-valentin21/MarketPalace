@@ -4,14 +4,22 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreSellerProductRequest;
+use App\Http\Requests\UpdateSellerProductRequest;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
+use App\Services\SellerService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SellerProductController extends ApiController
 {
+    private sellerService $sellerService;
+
+    public function __construct(SellerService $service)
+    {
+        $this->sellerService = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -52,23 +60,47 @@ class SellerProductController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Seller  $seller
-     * @return \Illuminate\Http\Response
+     * @param UpdateSellerProductRequest $request
+     * @param Seller $seller
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function update(Request $request, Seller $seller)
+    public function update(UpdateSellerProductRequest $request, Seller $seller, Product $product): JsonResponse
     {
-        //
+        if (isset($request->validator) && $request->validator->fails()) {
+            return response()->json($request->validator->messages(), 422);
+        }
+
+        $this->sellerService->checkSeller($seller,$product);
+        $product->fill($request->validated());
+
+        if ($request->has('status')) {
+            $product->status = $request->status;
+
+            if ($product->isAvailable() && $product->categories()->count() == 0) {
+                return $this->errorResponse('An active product must have at least one category', 409);
+            }
+        }
+
+        if ($product->isClean()) {
+            return $this->errorResponse('You need to specify a different value to update', 422);
+        }
+
+        $product->save();
+        return $this->showOne($product);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Seller  $seller
-     * @return \Illuminate\Http\Response
+     * @param Seller $seller
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function destroy(Seller $seller)
+    public function destroy(Seller $seller, Product $product): JsonResponse
     {
-        //
+        $this->sellerService->checkSeller($seller,$product);
+        $product->delete();
+        return $this->showOne($product);
     }
 }
