@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class ProductTransactionTest extends TestCase
+class ProductBuyerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,14 +20,16 @@ class ProductTransactionTest extends TestCase
 
     public function test_If_Product_Transaction_Index_Is_Working_Properly()
     {
-        $this->json('GET', '/products/' . 1 . '/transactions', ['Accept' => 'application/json'])
+        $this->json('GET', '/products/' . 1 . '/buyers', ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 [
                     "id",
-                    "quantity",
-                    "buyer_id",
-                    "product_id",
+                    "name",
+                    "email",
+                    "email_verified_at",
+                    "verified",
+                    "admin",
                     "created_at",
                     "updated_at",
                     "deleted_at"
