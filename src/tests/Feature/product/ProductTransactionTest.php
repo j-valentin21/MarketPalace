@@ -21,17 +21,6 @@ class ProductTransactionTest extends TestCase
     public function test_If_Product_Transaction_Index_Is_Working_Properly()
     {
         $this->json('GET', '/products/' . 1 . '/transactions', ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                [
-                    "id",
-                    "quantity",
-                    "buyer_id",
-                    "product_id",
-                    "created_at",
-                    "updated_at",
-                    "deleted_at"
-                ]
-            ]);
+            ->assertStatus(200);
     }
 }
