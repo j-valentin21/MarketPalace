@@ -5,10 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Mail\UserCreated;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
@@ -43,6 +44,7 @@ class UserController extends ApiController
             return response()->json($request->validator->messages(), 422);
         }
         $user = $this->userService->createUser($request);
+        Mail::to($user->email)->send(new UserCreated($user));
 
         return $this->showOne($user, 201);
     }
