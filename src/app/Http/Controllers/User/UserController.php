@@ -72,6 +72,8 @@ class UserController extends ApiController
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->json($request->validator->messages(), 422);
         }
+
+        $this->userService->newEmailVerification($request,$user);
         $this->userService->updateUser($request,$user);
 
         return $this->showOne($user);

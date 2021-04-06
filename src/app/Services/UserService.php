@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Mail\UserMailChanged;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserService
 {
@@ -56,4 +58,21 @@ class UserService
 
         $user->save();
     }
+
+    /**
+     * Create new user from request data
+     *
+     * @param $request
+     * @param $user
+     */
+    public function newEmailVerification($request, $user)
+    {
+        if ($request->has('email') && $user->email != $request->email) {
+            $user->verified = User::UNVERIFIED_USER;
+            $user->verification_token = User::generateVerificationCode();
+            $user->email = $request->email;
+            Mail::to($user->email)->send(new UserMailChanged($user));
+        }
+    }
+
 }
