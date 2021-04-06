@@ -29,4 +29,9 @@ trait ApiResponder
     {
         return $this->successResponse($instance, $code);
     }
+
+    protected function showMessage($message, $code = 200): \Illuminate\Http\JsonResponse
+    {
+        return $this->successResponse(['data' => $message], $code);
+    }
 }
