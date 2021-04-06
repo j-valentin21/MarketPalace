@@ -131,4 +131,15 @@ class UserTest extends TestCase
             ]);
         $this->assertNotEmpty($response['deleted_at']);
     }
+
+    public function test_User_Can_Be_Verified()
+    {
+        $user = User::factory()->create();
+
+        $this->json('GET', '/users/verify/' . $user->verification_token,   ['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJson([
+                "data" => 'The account has been verified successfully'
+            ]);
+    }
 }
