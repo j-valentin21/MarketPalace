@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
+
+    public $resource = UserResource::class;
 
     protected $dates = ['deleted_at'];
 
