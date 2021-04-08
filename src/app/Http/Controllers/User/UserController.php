@@ -25,7 +25,7 @@ class UserController extends ApiController
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index()
     {
         $user = User::all();
 

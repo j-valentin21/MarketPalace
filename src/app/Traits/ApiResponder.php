@@ -11,6 +11,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Request;
 
 trait ApiResponder
 {
@@ -24,12 +25,15 @@ trait ApiResponder
         return response()->json(['error' => $message, 'code' => $code], $code);
     }
 
-    protected function showAll(Collection $collection, $code = 200): \Illuminate\Http\JsonResponse
+    protected function showAll(Collection $collection, $code = 200)
     {
         if ($collection->isEmpty()) {
             return $this->successResponse(['data' => $collection], $code);
         }
+
+        $collection = $this->sortData($collection);
         $collection = $this->transformCollectionData($collection);
+
         return $this->successResponse($collection, $code);
     }
 
@@ -42,6 +46,16 @@ trait ApiResponder
     protected function showMessage($message, $code = 200): \Illuminate\Http\JsonResponse
     {
         return $this->successResponse(['data' => $message], $code);
+    }
+
+    protected function sortData(Collection $collection)
+    {
+        if (request()->has('sort_by')) {
+           $attribute = Request::input('sort_by');
+
+           $collection = $collection->sortBy->$attribute->values()->all();
+        }
+        return $collection;
     }
 
     protected function transformCollectionData($data): array
@@ -103,5 +117,4 @@ trait ApiResponder
                 $this->errorResponse('The resource your searching for could not be found', 404);
         }
     }
-
 }
