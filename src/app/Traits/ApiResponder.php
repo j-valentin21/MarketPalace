@@ -11,7 +11,6 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Request;
 
 trait ApiResponder
 {
@@ -51,9 +50,9 @@ trait ApiResponder
     protected function sortData(Collection $collection)
     {
         if (request()->has('sort_by')) {
-           $attribute = Request::input('sort_by');
-
-           $collection = $collection->sortBy->$attribute->values()->all();
+            $input = request()->sort_by;
+            $attribute = $this->setNewAttributeNames($collection, $input);
+            $collection = $collection->sortBy->$attribute->values()->all();
         }
         return $collection;
     }
@@ -113,6 +112,29 @@ trait ApiResponder
                 return new UserResource($data);
             case "TransactionResource":
                 return new TransactionResource($data);
+            default:
+                $this->errorResponse('The resource your searching for could not be found', 404);
+        }
+    }
+
+    protected function setNewAttributeNames($data, $input)
+    {
+        $resource = $data[0]->resource;
+        $resourceName = Str::of($resource)->substr(19);
+
+        switch ($resourceName) {
+            case "BuyerResource":
+                return BuyerResource::originalAttribute($input);
+            case "CategoryResource":
+                return CategoryResource::originalAttribute($input);
+            case "ProductResource":
+                return ProductResource::originalAttribute($input);
+            case "SellerResource":
+                return SellerResource::originalAttribute($input);
+            case "UserResource":
+                return UserResource::originalAttribute($input);
+            case "TransactionResource":
+                return TransactionResource::originalAttribute($input);
             default:
                 $this->errorResponse('The resource your searching for could not be found', 404);
         }
