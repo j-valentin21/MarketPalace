@@ -62,7 +62,6 @@ trait ApiResponder
         return $collection;
     }
 
-
     protected function paginate($collection)
     {
         $rules = [
