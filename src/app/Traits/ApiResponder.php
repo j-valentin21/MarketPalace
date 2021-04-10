@@ -63,7 +63,7 @@ trait ApiResponder
     }
 
 
-    protected function paginate(Collection $collection)
+    protected function paginate($collection)
     {
         $rules = [
             'per_page' => 'integer|min:2|max:50',
@@ -76,7 +76,7 @@ trait ApiResponder
         if (request()->has('per_page')) {
             $perPage = (int) request()->per_page;
         }
-
+        $collection = collect($collection);
         $results = $collection->slice(($page - 1) * $perPage, $perPage)->values();
         $paginated = new LengthAwarePaginator($results, $collection->count(), $perPage, $page, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
