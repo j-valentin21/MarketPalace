@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -33,7 +34,19 @@ class StoreCategoryRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        $this->validator = $validator;
+        $response = [
+            'status' => 'failure',
+            'status_code' => 422,
+            'message' => 'Bad Validation',
+            'errors' => [
+                "title", [ "The title field is required."],
+                "details" , [
+                    "The details field is required."
+                ]
+            ]
+        ];
+
+        throw new HttpResponseException(response()->json($response, 400));
     }
 }
 
