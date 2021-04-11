@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreProductBuyerTransactionRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\ProductService;
@@ -15,6 +16,7 @@ class ProductBuyerTransactionController extends ApiController
     public function __construct(ProductService $service)
     {
         $this->productService = $service;
+        $this->middleware('transform.input:' . TransactionResource::class)->only(['store']);
     }
 
     /**

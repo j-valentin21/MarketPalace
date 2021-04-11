@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Mail\UserCreated;
 use App\Models\User;
 use App\Services\UserService;
@@ -18,6 +19,7 @@ class UserController extends ApiController
     public function __construct(UserService $service)
     {
         $this->userService = $service;
+        $this->middleware('transform.input:' . UserResource::class)->only(['update']);
     }
 
     /**

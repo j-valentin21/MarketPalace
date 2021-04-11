@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreSellerProductRequest;
 use App\Http\Requests\UpdateSellerProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
@@ -19,6 +20,7 @@ class SellerProductController extends ApiController
     public function __construct(SellerService $service)
     {
         $this->sellerService = $service;
+        $this->middleware('transform.input:' . ProductResource::class)->only(['update']);
     }
 
     /**
