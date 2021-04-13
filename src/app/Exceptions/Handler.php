@@ -8,6 +8,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -71,5 +72,10 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => 'Cannot remove this resource permanently. It is related to other resources', 'code' => 409], 409);
             }
         });
+
+        $this->renderable(function (TokenMismatchException $e) {
+            return redirect()->back()->withInput(request()->input());
+        });
+
     }
 }
