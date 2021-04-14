@@ -20,7 +20,8 @@ class UserController extends ApiController
     {
         $this->userService = $service;
         $this->middleware('transform.input:' . UserResource::class)->only(['update']);
-        $this->middleware('client.credentials')->only(['store','resend']);
+        $this->middleware('client.credentials')->only(['store','resend', 'verify']);
+        $this->middleware('auth:api')->except(['store', 'resend']);
     }
 
     /**

@@ -20,6 +20,7 @@ class SellerProductController extends ApiController
     public function __construct(SellerService $service)
     {
         $this->sellerService = $service;
+        parent::__construct();
         $this->middleware('transform.input:' . ProductResource::class)->only(['update', 'store']);
     }
 
