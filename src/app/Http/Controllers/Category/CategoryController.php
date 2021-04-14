@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
 {
-
     public function __construct()
     {
+        $this->middleware('client.credentials')->only(['index', 'show']);
         $this->middleware('transform.input:' . CategoryResource::class)->only(['store', 'update']);
     }
+
     /**
      * Display a listing of the resource.
      *
