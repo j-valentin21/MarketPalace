@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use HttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -76,6 +76,5 @@ class Handler extends ExceptionHandler
         $this->renderable(function (TokenMismatchException $e) {
             return redirect()->back()->withInput(request()->input());
         });
-
     }
 }
