@@ -19,10 +19,14 @@ class UserController extends ApiController
     public function __construct(UserService $service)
     {
         $this->userService = $service;
+
+        $this->middleware('client.credentials')->only(['resend']);
+        $this->middleware('auth:api')->except(['showRegisterForm', 'store', 'verify', 'resend']);
         $this->middleware('transform.input:' . UserResource::class)->only(['update']);
-        $this->middleware('client.credentials')->only(['store','resend', 'verify']);
-        $this->middleware('auth:api')->except(['store', 'resend']);
         $this->middleware('scope:manage-account')->only(['show', 'update']);
+        $this->middleware('can:view,user')->only('show');
+        $this->middleware('can:update,user')->only('update');
+        $this->middleware('can:delete,user')->only('destroy');
     }
 
     /**
