@@ -22,8 +22,14 @@ class SellerProductController extends ApiController
     {
         $this->sellerService = $service;
         parent::__construct();
+
         $this->middleware('transform.input:' . ProductResource::class)->only(['update', 'store']);
         $this->middleware('scope:manage-products')->except('index');
+
+        $this->middleware('can:view,seller')->only('index');
+        $this->middleware('can:sale,seller')->only('store');
+        $this->middleware('can:edit-product,seller')->only('update');
+        $this->middleware('can:delete-product,seller')->only('destroy');
     }
 
     /**
