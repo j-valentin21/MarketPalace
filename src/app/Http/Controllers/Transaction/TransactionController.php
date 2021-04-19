@@ -21,9 +21,12 @@ class TransactionController extends ApiController
      * Display a listing of the resource.
      *
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(): JsonResponse
     {
+        $this->allowedAdminAction();
+
         $transactions = Transaction::all();
 
         return $this->showAll($transactions);

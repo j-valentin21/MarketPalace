@@ -19,9 +19,12 @@ class SellerController extends ApiController
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $seller = Seller::has('products')->get();
 
         return $this->showAll($seller);

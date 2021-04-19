@@ -31,6 +31,5 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::get('/home/my-tokens', [HomeController::class, 'getTokens'])->name('personal-tokens');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
 Route::view('/', 'welcome')->middleware('guest');
 

@@ -34,9 +34,12 @@ class CategoryController extends ApiController
      *
      * @param StoreCategoryRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreCategoryRequest $request): \Illuminate\Http\JsonResponse
     {
+        $this->allowedAdminAction();
+
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->json($request->validator->messages(), 422);
         }
@@ -50,9 +53,12 @@ class CategoryController extends ApiController
      *
      * @param Category $category
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Category $category): \Illuminate\Http\JsonResponse
     {
+        $this->allowedAdminAction();
+
         return $this->showOne($category);
     }
 
@@ -79,9 +85,12 @@ class CategoryController extends ApiController
      *
      * @param Category $category
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Category $category): \Illuminate\Http\JsonResponse
     {
+        $this->allowedAdminAction();
+
         $category->delete();
 
         return $this->showOne($category);

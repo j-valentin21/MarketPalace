@@ -33,9 +33,12 @@ class UserController extends ApiController
      * Display a listing of the resource.
      *
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $user = User::all();
 
         return $this->showAll($user);

@@ -40,6 +40,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('admin-action', function ($user) {
+            return $user->isAdmin();
+        });
+
         if (! $this->app->routesAreCached()) {
             Passport::routes();
         }

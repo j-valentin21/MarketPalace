@@ -20,9 +20,12 @@ class BuyerController extends ApiController
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
+        $this->allowedAdminAction();
+
         $buyers = Buyer::has('transactions')->get();
 
         return $this->showAll($buyers);

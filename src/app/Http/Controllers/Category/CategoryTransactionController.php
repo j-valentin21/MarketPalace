@@ -18,9 +18,12 @@ class CategoryTransactionController extends ApiController
      *
      * @param Category $category
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Category $category): JsonResponse
     {
+        $this->allowedAdminAction();
+
         $transactions = $category->products()
             ->whereHas('transactions')
             ->with('transactions')

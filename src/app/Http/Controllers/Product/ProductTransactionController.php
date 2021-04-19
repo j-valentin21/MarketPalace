@@ -20,9 +20,12 @@ class ProductTransactionController extends ApiController
      *
      * @param Product $product
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Product $product): JsonResponse
     {
+        $this->allowedAdminAction();
+
         $transactions = $product->transactions;
 
         return $this->showAll($transactions);

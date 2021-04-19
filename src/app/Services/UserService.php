@@ -48,6 +48,7 @@ class UserService
         }
 
         if ($request->has('admin')) {
+            $this->allowedAdminAction();
 
             if (!$user->isVerified()) {
                 return $this->errorResponse('Only verified users can modify the admin field', 409);
