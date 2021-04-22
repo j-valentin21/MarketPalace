@@ -3,13 +3,16 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Welcome to MarketPalace</div>
-
-                    <div class="panel-body">
-                        This is the main page
-                    </div>
+                    <div class="">Welcome to MarketPalace</div>
+                </div>
+                <div class="image-container">
+                    <img class="img-fluid" src="{{ asset('img/shipping.jpg') }}" alt="shipping" />
+                    <img class="img-fluid" src="{{ asset('img/sold.jpg') }}" alt="sold" />
+                    <img class="img-fluid" src="{{ asset('img/transaction.jpg') }}" alt="money transaction" />
+                    <img class="img-fluid" src="{{ asset('img/mall-products.jpg') }}" alt="mall products" />
+                    <img class="img-fluid" src="{{ asset('img/buying-products.jpg') }}" alt="buying products" />
                 </div>
             </div>
         </div>

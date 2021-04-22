@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (HttpException $e) {
-            return response()->json($e->getMessage(), $e->getCode());
+            return response()->json([$e->getMessage(), $e->getCode()]);
         });
 
         $this->renderable(function (QueryException $e) {
@@ -71,6 +71,7 @@ class Handler extends ExceptionHandler
             if ($errorCode == 1451) {
                 return response()->json(['error' => 'Cannot remove this resource permanently. It is related to other resources', 'code' => 409], 409);
             }
+            return $errorCode;
         });
 
         $this->renderable(function (TokenMismatchException $e) {
