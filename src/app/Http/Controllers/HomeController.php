@@ -21,12 +21,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\Support\Renderable
     {
         return view('home');
     }
 
-    public function getTokens()
+    /**
+     * Show default personal-token view from laravel passport.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getTokens(): \Illuminate\Contracts\Support\Renderable
     {
         return view('home.personal-tokens');
     }
