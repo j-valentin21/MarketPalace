@@ -63,7 +63,17 @@
                             </ul>
                         </li>
                     </ol>
-                    <p>The links provided below can only be accessed with the ModHeader installation</p>
+                    <div>
+                        <p>The links provided below can only be accessed with the ModHeader installation</p>
+                        <ul>
+                            <li><a href="{{ config('app.url') }}/users">Users</a></li>
+                            <li><a href="{{ config('app.url') }}/products">Products</a></li>
+                            <li><a href="{{ config('app.url') }}/buyers">Buyers</a></li>
+                            <li><a href="{{ config('app.url') }}/sellers">Sellers</a></li>
+                            <li><a href="{{ config('app.url') }}/categories">Categories</a></li>
+                            <li><a href="{{ config('app.url') }}/transactions">Transactions</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
