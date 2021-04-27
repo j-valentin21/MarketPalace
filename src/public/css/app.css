@@ -10946,7 +10946,6 @@ a.text-dark:focus {
 
 .image-container {
   position: relative;
-  max-height: 720px;
 }
 
 .image-container img {
@@ -10984,6 +10983,10 @@ a.text-dark:focus {
 .image-container img:nth-of-type(5) {
   -webkit-animation-delay: 0s;
           animation-delay: 0s;
+}
+
+.img-responsive {
+  width: 100%;
 }
 
 @-webkit-keyframes crossfade {
