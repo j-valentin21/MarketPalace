@@ -14,6 +14,11 @@
                     <img class="img-responsive" src="{{ asset('img/transaction.jpg') }}" alt="money transaction"/>
                     <img class="img-responsive" src="{{ asset('img/mall-products.jpg') }}" alt="mall products"/>
                 </div>
+                <div>
+                    <p class="section__text">This extensive API keeps track of all data related to buyers and sellers of all products.
+                        You can also view all transactions from buyers/sellers and create categories for new products.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

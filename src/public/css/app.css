@@ -11046,6 +11046,15 @@ a.text-dark:focus {
   font-size: 1.5rem;
 }
 
+.section__text {
+  position: relative;
+  top: 53rem;
+  height: 20vh;
+  left: 0;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
 body {
   font-family: "Heebo", sans-serif;
   font-weight: 300;
