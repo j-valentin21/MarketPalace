@@ -13,10 +13,26 @@
                         </div>
                     @endif
                     <p>You are now logged in!</p>
-                    <p class="mb-2">You must create a personal access token to get access to this API.</p>
-                    <p>Once the PAT has been created, you can use them in two different ways:</p>
-                    <p>Accessing the API with the ModHeaded installation allows you access through the browser.</p>
-                    <p>If you use Postman installation you will have to manually access resource URL's</p>
+                    <p class="mb-2 font-weight-bold">You must create a personal access token to get access to this API.</p>
+                    <div>
+                      <h5>Scopes</h5>
+                        <ul>
+                            <li>purchase-product: Create a new transaction for a specific product</li>
+                            <li>manage-product: Create, reade, update, and delete products (CRUD)</li>
+                            <li>manage-account: Read your account data, id, name, email, if verified, and if admin (cannot read password).
+                                Modify your account data (email, and password). Cannot delete your account
+                            </li>
+                            <li>read-general:Read general information like purchasing categories, purchased products, selling products,
+                                selling categories, your transactions (purchases and sales
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>Using PAT</h5>
+                        <p>Once the PAT has been created, you can use them in two different ways:</p>
+                        <p>Accessing the API with the ModHeaded installation allows you access through the browser.</p>
+                        <p>If you use Postman installation you will have to manually access resource URL's</p>
+                    </div>
                     <ol>
                         <li> You can download Postman to add the PAT to the request header.
                             <ul>
