@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="panel panel-default">
-                    <div class="">Welcome to MarketPalace</div>
+                    <div class="header mb-5">Welcome to MarketPalace</div>
                 </div>
                 <div class="image-container">
                     <img class="img-responsive" src="{{ asset('img/shipping.jpg') }}" alt="shipping"/>
