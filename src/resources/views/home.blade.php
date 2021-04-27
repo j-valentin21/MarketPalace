@@ -64,7 +64,7 @@
                         </li>
                     </ol>
                     <div>
-                        <p>The links provided below can only be accessed with the ModHeader installation</p>
+                        <p>The links provided below can only be accessed with the ModHeader installation:</p>
                         <ul>
                             <li><a href="{{ config('app.url') }}/users">Users</a></li>
                             <li><a href="{{ config('app.url') }}/products">Products</a></li>
@@ -73,6 +73,13 @@
                             <li><a href="{{ config('app.url') }}/categories">Categories</a></li>
                             <li><a href="{{ config('app.url') }}/transactions">Transactions</a></li>
                         </ul>
+                    </div>
+                    <div>
+                        <h5>Additional Resource Information</h5>
+                        <p>You can sort by any attribute by adding "?sort_by=(attribute)" to the end of the URL string.</p>
+                        <p>The MarketPalace API is data that is paginated by default but the page search can be customized by adding "?page=(number of page)"
+                            to the end of the URL string.
+                        </p>
                     </div>
                 </div>
             </div>
