@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\transaction;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class TransactionCategoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function setUp()
     : void {

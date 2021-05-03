@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\product;
 
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function test_If_Products_Index_Is_Working_Properly()
     {

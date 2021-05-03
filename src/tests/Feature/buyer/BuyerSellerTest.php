@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\buyer;
 
 use App\Models\Buyer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class BuyerSellerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function setUp()
     : void {

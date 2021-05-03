@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\category;
 
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class CategorySellerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function setUp()
     : void {

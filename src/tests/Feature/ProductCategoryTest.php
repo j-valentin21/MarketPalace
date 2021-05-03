@@ -4,12 +4,13 @@ namespace Tests\Feature;
 
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class ProductCategoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function setUp()
     : void {

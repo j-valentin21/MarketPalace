@@ -1,14 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\category;
 
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function test_If_Categories_Index_Is_Working_Properly()
     {

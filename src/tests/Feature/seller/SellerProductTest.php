@@ -1,18 +1,17 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\seller;
 
-use App\Models\Product;
 use App\Models\Seller;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class SellerProductTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase,WithoutMiddleware;
 
     public function setUp()
     : void {
@@ -43,31 +42,6 @@ class SellerProductTest extends TestCase
                 "image" => ["The image field is required."]
             ]);
     }
-
-//    public function test_Success_Product_Creation()
-//    {
-//
-//        $productData = [
-//            'name' => 'Johnny Knows',
-//            'description' => 'Apple',
-//            'image' =>  'apple.jpg',
-//            'quantity' => 1
-//        ];
-//
-//
-//           $this->json('POST', '/sellers/' . 1 . '/products', $productData, ['Accept' => 'application/json'])
-//            ->assertStatus(201)
-//            ->assertJsonStructure([
-//                "name",
-//                "email",
-//                "verified",
-//                "admin",
-//                "updated_at",
-//                "created_at",
-//                "id"
-//            ]);
-//
-//    }
 
     public function test_Seller_Product_Can_Be_Deleted()
     {
