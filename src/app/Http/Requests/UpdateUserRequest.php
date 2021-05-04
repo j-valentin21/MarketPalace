@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -37,6 +38,20 @@ class UpdateUserRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        $this->validator = $validator;
+        $response = [
+            'status' => 'failure',
+            'status_code' => 422,
+            'message' => 'Bad Validation',
+            'errors' => [
+                "email" , [
+                    'The email must be unique'
+                ],
+                "password", [
+                    "password must have at least 6 characters"
+                ]
+            ]
+        ];
+
+        throw new HttpResponseException(response()->json($response, 422));
     }
 }

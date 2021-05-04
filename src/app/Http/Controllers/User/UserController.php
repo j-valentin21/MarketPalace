@@ -52,9 +52,6 @@ class UserController extends ApiController
      */
     public function store(CreateUserRequest $request): JsonResponse
     {
-        if (isset($request->validator) && $request->validator->fails()) {
-            return response()->json($request->validator->messages(), 422);
-        }
         $user = $this->userService->createUser($request);
         Mail::to($user->email)->send(new UserCreated($user));
 
@@ -81,10 +78,6 @@ class UserController extends ApiController
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        if (isset($request->validator) && $request->validator->fails()) {
-            return response()->json($request->validator->messages(), 422);
-        }
-
         $this->userService->newEmailVerification($request,$user);
         $this->userService->updateUser($request,$user);
 

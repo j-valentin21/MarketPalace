@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\product;
 
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,25 +26,6 @@ class ProductCategoryTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function test_If_Product_Category_Can_Be_Updated()
-    {
-        $products = Product::all()->random()->id;
-        $categoryId =   rand(1,25);
-
-        $this->json('PUT', '/products/' . $products . '/categories/' . $categoryId , ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                [
-                    "id",
-                    "name",
-                    "description",
-                    "created_at",
-                    "updated_at",
-                    "deleted_at"
-                ]
-            ]);
-    }
-
     public function test_If_Product_Category_Responds_With_Status_Code_404_When_Resource_Does_Not_Exist()
     {
         $products = Product::all()->random()->id;
@@ -56,14 +37,5 @@ class ProductCategoryTest extends TestCase
                     "error",
                     "code"
             ]);
-    }
-
-    public function test_If_Product_Category_Can_Be_Deleted()
-    {
-        $products = Product::all()->first();
-        $categoryId = $products->categories->pluck('id')->first();
-
-        $this->json('DELETE', '/products/' . $products->id . '/categories/' . $categoryId , ['Accept' => 'application/json'])
-            ->assertStatus(200);
     }
 }

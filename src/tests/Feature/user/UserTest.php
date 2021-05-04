@@ -23,9 +23,22 @@ class UserTest extends TestCase
         $this->json('POST', '/users', ['Accept' => 'application/json'])
             ->assertStatus(422)
             ->assertJson([
-                "name" => ["The name field is required."],
-                "email" => ["The email field is required."],
-                "password" => ["The password field is required."],
+                "errors" => [
+                    "name",
+                    [
+                        "The name field is required."
+                    ],
+                    "email",
+                    [
+                        "The email field is required.",
+                        "The email must be unique"
+                    ],
+                    "password",
+                    [
+                        "password field is required",
+                        "password must have at least 6 characters"
+                    ]
+            ]
             ]);
     }
 
@@ -36,14 +49,17 @@ class UserTest extends TestCase
             "password" => "demo1",
         ];
 
-        $this->json('POST', '/users', $userData, ['Accept' => 'application/json'])
+        $this->json('PUT', '/users/' . 1, $userData, ['Accept' => 'application/json'])
             ->assertStatus(422)
             ->assertJson([
-                "email" => ["The email must be a valid email address."],
-                "password" => [
-                    "The password must be at least 6 characters.",
-                    "The password confirmation does not match."
-                ],
+                'errors' => [
+                    "email" , [
+                        'The email must be unique'
+                    ],
+                    "password", [
+                        "password must have at least 6 characters"
+                    ]
+                ]
             ]);
     }
 
@@ -59,32 +75,14 @@ class UserTest extends TestCase
        $response = $this->json('POST', '/users', $userData, ['Accept' => 'application/json'])
             ->assertStatus(201)
             ->assertJsonStructure([
+                "identifier",
                 "name",
                 "email",
-                "verified",
-                "admin",
-                "updated_at",
-                "created_at",
-                "id"
-            ]);
-    }
-
-    public function test_One_User_Is_Displayed_Based_On_Id()
-    {
-        $user = User::factory()->create();
-
-        $this->json('GET', '/users/' . $user->id,  ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                "id",
-                "name",
-                "email",
-                "email_verified_at",
-                "verified",
-                "admin",
-                "created_at",
-                "updated_at",
-                "deleted_at",
+                "isVerified",
+                "isAdmin",
+                "creationDate",
+                "lastChange",
+                "deletedDate",
             ]);
     }
 
@@ -96,41 +94,9 @@ class UserTest extends TestCase
             "email" => "test@example.com",
         ];
 
-       $response = $this->json('PUT', '/users/' . $user->id, $userData,  ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                "id",
-                "name",
-                "email",
-                "email_verified_at",
-                "verified",
-                "admin",
-                "created_at",
-                "updated_at",
-                "deleted_at",
-            ]);
-        $this->assertEquals($response['name'], $userData['name']);
-        $this->assertEquals($response['email'], $userData['email']);
-    }
+       $this->json('PUT', '/users/' . $user->id, $userData,  ['Accept' => 'application/json'])
+            ->assertStatus(200);
 
-    public function test_User_Can_Deleted()
-    {
-        $user = User::factory()->create();
-
-        $response = $this->json('DELETE', '/users/' . $user->id,   ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                "id",
-                "name",
-                "email",
-                "email_verified_at",
-                "verified",
-                "admin",
-                "created_at",
-                "updated_at",
-                "deleted_at",
-            ]);
-        $this->assertNotEmpty($response['deleted_at']);
     }
 
     public function test_User_Can_Be_Verified()
