@@ -40,10 +40,6 @@ class CategoryController extends ApiController
     {
         $this->allowedAdminAction();
 
-        if (isset($request->validator) && $request->validator->fails()) {
-            return response()->json($request->validator->messages(), 422);
-        }
-
         $newCategory = Category::create($request->all());
         return $this->showOne($newCategory, 201);
     }
@@ -90,7 +86,6 @@ class CategoryController extends ApiController
     public function destroy(Category $category): \Illuminate\Http\JsonResponse
     {
         $this->allowedAdminAction();
-
         $category->delete();
 
         return $this->showOne($category);
