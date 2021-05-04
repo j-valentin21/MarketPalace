@@ -59,10 +59,6 @@ class SellerProductController extends ApiController
      */
     public function store(StoreSellerProductRequest $request, User $seller): JsonResponse
     {
-        if (isset($request->validator) && $request->validator->fails()) {
-            return response()->json($request->validator->messages(), 422);
-        }
-
         $data = $request->validated();
 
         $data['status'] = Product::UNAVAILABLE_PRODUCT;

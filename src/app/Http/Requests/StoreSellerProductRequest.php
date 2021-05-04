@@ -59,6 +59,6 @@ class StoreSellerProductRequest extends FormRequest
             ]
         ];
 
-        throw new HttpResponseException(response()->json($response, 400));
+        throw new HttpResponseException(response()->json($response, 422));
     }
 }
