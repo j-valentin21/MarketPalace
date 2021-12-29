@@ -34,7 +34,7 @@ services:
       - laravel
 
   mysql:
-    image: mysql:5.7.32
+    image: mariadb:10.5.8
     container_name: mysql
     ports:
       - 4306:3306
