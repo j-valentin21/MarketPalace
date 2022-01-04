@@ -28,7 +28,17 @@
                         </ul>
                     </div>
                     <div>
-                        <h5>Using PAT</h5>
+                        <h5>Use Seeder To Add Data For API</h5>
+                        <p>php artisan db:seed</p>
+                        <p>Get first user's email from DB.</p>
+                        <p>Change password of first user so you can get access to API home page.</p>
+                    </div>
+                    <div>
+                        <h5>Create Oauth Client To Get Access To PAT Tokens</h5>
+                        <p>php artisan passport:install</p>
+                    </div>
+                    <div>
+                        <h5>Using PAT(Personal Access Token)</h5>
                         <p>Once the PAT has been created, you can use them in two different ways:</p>
                         <p>Accessing the API with the ModHeaded installation allows you access through the browser.</p>
                         <p>If you use Postman installation you will have to manually access resource URL's</p>
