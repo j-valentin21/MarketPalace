@@ -3,7 +3,7 @@ MarketPalace API is a market system API that has been created to keep track of a
 work on a project that will increase my skillset by challenging myself to learn brand new concepts that I can apply to other API's in the future.
 
 ## General info
-A user has been created for you to fully navigate this API. Once the user is logged, All further instructions are provided on the home page of the user.
+After project is forked, use seeder to create users and change the password so you can login in as user.
 
 ## Technologies
 * HTML 5
@@ -18,7 +18,6 @@ A user has been created for you to fully navigate this API. Once the user is log
 * MYSQL
 * NGINX
 * Linux
-* Digital Ocean Droplet
 * PHPUnit
 
 ## Features
